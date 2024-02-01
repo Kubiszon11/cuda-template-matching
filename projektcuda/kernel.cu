@@ -40,7 +40,7 @@ int main() {
 
 
 
-	uint8_t* host_image = stbi_load("labedz.jpg", &width, &height, &channels, 0);
+	uint8_t* host_image = stbi_load("labedzM.jpg", &width, &height, &channels, 0);
 	if (host_image == nullptr) {
 		cerr << "Error loading image to check." << endl;
 		return -1;
@@ -464,7 +464,6 @@ int main() {
 			samples45++;
 		}
 	}
-<<<<<<< HEAD
 	int samplesdec = 0;
 	for (int i = 0; i < (width - widthAdec) * (height - heightAdec); i++) {
 		if (sample_checkAdec[i] == 1) {
@@ -475,16 +474,6 @@ int main() {
 	for (int i = 0; i < (width - widthAinc) * (height - heightAinc); i++) {
 		if (sample_checkAinc[i] == 1) {
 			samplesinc++;
-=======
-	for (int i = 0; i < (width - widthAdec) * (height - heightAdec); i++) {
-		if (sample_checkAdec[i] == 1) {
-			samples++;
-		}
-	}
-	for (int i = 0; i < (width - widthAinc) * (height - heightAinc); i++) {
-		if (sample_checkAinc[i] == 1) {
-			samples++;
->>>>>>> 6bd2739cfd20f61874815e59b06546f46a40bac9
 		}
 	}
 
@@ -523,11 +512,7 @@ int main() {
 	cudaMalloc((void**)&dev_with_boundingBox, width * height * 3 * sizeof(uint8_t));
 	cudaMemcpy(dev_image, host_image, width * height * 3 * sizeof(uint8_t), cudaMemcpyHostToDevice);
 
-<<<<<<< HEAD
 	bounding_box << <gridSizeBB, blockSize >> > (dev_image, dev_with_boundingBox, width, height, widthA, heightA, widthAdec, heightAdec, widthAinc, heightAinc, widthA45, heightA45, dev_sample_check, dev_top_left, samples, samplesdec, samplesinc, samples45);
-=======
-	bounding_box << <gridSizeBB, blockSize >> > (dev_image, dev_with_boundingBox, width, height, widthA, heightA, dev_sample_check, dev_top_left, samples);
->>>>>>> 6bd2739cfd20f61874815e59b06546f46a40bac9
 	cudaDeviceSynchronize();
 
 	uint8_t* host_with_boundingBox = new uint8_t[width * height * 3];
